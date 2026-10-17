@@ -1,0 +1,71 @@
+{
+  "case_id": "EDU_DROP_001",
+  "source_org": "World Bank",
+  "source_type": "Policy Research Working Paper",
+  "working_paper": "9085",
+  "source_title": "Addressing High School Dropouts with a Scalable Intervention: The Case of PODER",
+  "year": 2019,
+
+  "axis": "Educação",
+  "subaxis": "Ensino Médio",
+  "problem": "Evasão Escolar",
+
+  "country": "México",
+  "region": "Cidade do México",
+
+  "program_name": "PODER",
+  "program_full_name": "Programa de Oportunidades y Desarrollo para Evitar Riesgos",
+
+  "target_population": "Estudantes do primeiro ano do ensino médio superior, identificados como de alto risco de evasão",
+
+  "intervention": [
+    "Oficinas de habilidades socioemocionais baseadas em terapia cognitivo-comportamental (CBT)",
+    "Tutoria de matemática"
+  ],
+
+  "implementation_setting": "20 escolas públicas federais da Cidade do México",
+
+  "delivery_agents": "Professores voluntários da própria rede, treinados para conduzir as atividades",
+
+  "student_participation": "Voluntária",
+
+  "evaluation_method": "Randomized Control Trial (RCT)",
+
+  "sample_size": 5274,
+
+  "treatment_groups": {
+    "group_1": "10 sessões de CBT",
+    "group_2": "20 sessões de CBT",
+    "control": "Grupo de controle"
+  },
+
+  "outcomes": [
+    "Habilidades socioemocionais",
+    "Desempenho em matemática",
+    "Matrícula no 11º ano",
+    "Reentrada no COMIPEMS",
+    "Engajamento escolar"
+  ],
+
+  "main_result": "Resultados mistos. Houve melhora limitada em uma das medidas de habilidades socioemocionais, mas não houve evidência estatisticamente significativa de melhora em matemática nem na probabilidade de matrícula no ano seguinte na análise principal.",
+
+  "implementation_problems": [
+    "Início tardio do programa",
+    "Ausência de estratégia de comunicação",
+    "Atividades realizadas fora do horário escolar",
+    "Ausência de incentivos para estudantes e professores",
+    "Baixa adesão dos participantes",
+    "Estigmatização do programa"
+  ],
+
+  "limitations": [
+    "Baixa participação nas sessões",
+    "Participação em tutoria de matemática praticamente nula",
+    "Possível contaminação entre grupos devido à randomização individual dentro das mesmas escolas",
+    "Resultados entre participantes mais assíduos não podem ser interpretados com o mesmo nível de causalidade do RCT principal"
+  ],
+
+  "scalability_note": "O programa utilizou professores da própria rede, em vez de especialistas externos, com o objetivo de aumentar a possibilidade de escala.",
+
+  "review_status": "validated_manual"
+}
