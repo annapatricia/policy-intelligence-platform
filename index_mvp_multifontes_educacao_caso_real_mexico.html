@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plataforma de Políticas Públicas Comparadas — MVP</title>
+<style>
+:root{--bg:#0b1f33;--panel:#ffffff;--border:#cbd5e1;--ink:#0f172a;--muted:#64748b;--accent:#2563eb;--accent-dark:#1d4ed8;--tag-bg:#dbeafe;--tag-ink:#1e3a8a;--gold:#c89b2c;--silver:#64748b;--bronze:#92400e;--score-good:#166534;--score-mid:#a16207;--score-low:#b91c1c}
+*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:14px}header{background:#102a43;border-bottom:1px solid var(--border);padding:18px 32px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}header h1{margin:0;font-size:18px;font-weight:700;color:#fff}header .sub{color:#cbd5e1;font-size:13px;margin-top:4px}nav.tabs{display:flex;gap:8px;font-size:13px}nav.tabs button{background:transparent;border:0;color:#cbd5e1;padding:9px 14px;border-radius:6px;font-weight:600;cursor:pointer}nav.tabs button:hover{background:#173a5e;color:#fff}nav.tabs button.active{background:#ffffff;color:#102a43}.view{display:none}.view.active{display:block}.layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;padding:24px 32px;max-width:1400px;margin:0 auto}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}.stat{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:14px 16px;box-shadow:0 4px 14px rgba(15,23,42,.12)}.stat .n{font-size:24px;font-weight:700;color:var(--accent)}.stat .l{font-size:12px;color:var(--muted);margin-top:2px}.section-title{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--ink);margin:20px 0 12px}.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}.card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:19px;cursor:pointer;box-shadow:0 4px 14px rgba(15,23,42,.10);transition:border-color .15s,transform .15s}.card:hover{border-color:var(--accent);transform:translateY(-1px)}.flag{display:inline-block;font-size:20px;margin-right:6px}.card .title{font-size:14px;font-weight:700;margin:8px 0;line-height:1.3}.card .meta{font-size:12px;color:var(--muted);margin-bottom:10px}.tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}.tag{background:var(--tag-bg);color:var(--tag-ink);padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}.dims{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:10px}.dim{font-size:10px;color:var(--muted);text-align:center;padding:5px 3px;background:var(--tag-bg);border-radius:4px}.dim.full{background:#dcfce7;color:#166534}.dim.partial{background:#fef3c7;color:#92400e}.dim.empty{background:#fee2e2;color:#991b1b}aside,.controls{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px;height:fit-content;box-shadow:0 4px 14px rgba(15,23,42,.10)}aside{position:sticky;top:24px}aside h2,.controls h2{margin:0 0 4px;font-size:15px}aside .desc,.controls .desc{color:var(--muted);font-size:12px;margin-bottom:16px}label{display:block;font-size:12px;font-weight:600;margin-top:12px;margin-bottom:4px}input[type=text],select,textarea{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font:inherit;font-size:13px;background:#ffffff;color:var(--ink)}textarea{min-height:60px;resize:vertical}.checks{display:flex;flex-direction:column;gap:4px}.checks label{display:flex;align-items:center;gap:6px;font-weight:400;margin:0;font-size:13px;cursor:pointer}.primary{width:100%;background:var(--accent);color:#fff;border:0;padding:10px;border-radius:6px;font-weight:600;cursor:pointer;margin-top:14px}.primary:hover{background:var(--accent-dark)}.footer-note{font-size:11px;color:var(--muted);margin-top:10px;text-align:center}.ingest-bar{display:flex;gap:8px;align-items:center;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:10px 14px;margin-bottom:20px}.ingest-bar input{flex:1}.ingest-bar select{width:185px}.ingest-bar button{background:var(--ink);color:#fff;border:0;padding:9px 12px;border-radius:6px;cursor:pointer;white-space:nowrap}.layout-rank{display:grid;grid-template-columns:300px minmax(0,1fr);gap:24px;padding:24px 32px;max-width:1400px;margin:auto}.ref-card{background:var(--tag-bg);border-radius:6px;padding:10px 12px;margin-bottom:16px;border-left:3px solid var(--accent)}.ref-card .title{font-weight:700;font-size:13px}.ref-card .sub{font-size:11px;color:var(--muted);margin-top:2px}.weight-row{display:flex;align-items:center;gap:8px}.weight-row input[type=range]{flex:1;min-width:0}.weight-row .pct{font-size:12px;color:var(--accent);font-weight:700;width:36px;text-align:right}.criteria-desc{font-size:11px;color:var(--muted);margin-top:2px;font-style:italic}.main-head{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:14px 20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;gap:15px}.main-head .lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}.main-head .val{font-weight:700}.medals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:24px}.podium{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:16px;position:relative;border-top:4px solid var(--silver)}.podium.gold{border-top-color:var(--gold)}.podium.silver{border-top-color:var(--silver)}.podium.bronze{border-top-color:var(--bronze)}.medal{position:absolute;top:-14px;right:12px;background:#ffffff;border:2px solid var(--gold);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--gold)}.podium.silver .medal{border-color:var(--silver);color:var(--silver)}.podium.bronze .medal{border-color:var(--bronze);color:var(--bronze)}.podium .title{font-weight:700;font-size:14px;margin:4px 0;line-height:1.3}.podium .meta{font-size:12px;color:var(--muted);margin-bottom:10px}.score-big{font-size:32px;font-weight:700;color:var(--accent);line-height:1;margin:10px 0 4px}.score-big .suf{font-size:14px;color:var(--muted);font-weight:400}.breakdown{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}.bd-item{flex:1;min-width:60px;background:var(--tag-bg);border-radius:4px;padding:4px 6px;text-align:center;font-size:10px}.bd-item .lbl{color:var(--muted);display:block}.bd-item .v{font-size:11px;font-weight:700;color:var(--tag-ink)}.justif{font-size:12px;padding-top:12px;border-top:1px solid var(--border);margin-top:12px;color:var(--ink);line-height:1.5}.podium a{display:block;margin-top:10px;font-size:12px;color:var(--accent);text-decoration:none;font-weight:600}.table-wrap{background:var(--panel);border:1px solid var(--border);border-radius:8px;overflow:auto}table{width:100%;border-collapse:collapse;min-width:690px}thead th{background:var(--tag-bg);color:var(--tag-ink);text-align:left;padding:10px 14px;font-size:12px}tbody td{padding:10px 14px;border-top:1px solid var(--border);font-size:13px}tbody tr:hover{background:#f8fafc}.score-cell{font-weight:700;text-align:center}.score-cell.good{color:var(--score-good)}.score-cell.mid{color:var(--score-mid)}.score-cell.low{color:var(--score-low)}.warn-note{background:#eff6ff;border:1px solid #bfdbfe;color:#1e40af;padding:10px 14px;border-radius:6px;font-size:12px;margin-top:20px;line-height:1.5}.empty-state{max-width:700px;margin:40px auto;padding:24px 32px;background:var(--panel);border:1px solid var(--border);border-radius:8px}.empty-state h2{margin-top:0}.empty-state p{line-height:1.6;color:var(--muted)}.report-output{white-space:pre-wrap;line-height:1.6;background:#f8fafc;padding:14px;border:1px solid var(--border);border-radius:6px;margin-top:18px}.notice{margin-top:10px;font-size:12px;color:var(--accent-dark)}
+.tram-layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:24px;padding:24px 32px;max-width:1400px;margin:0 auto}.tram-panel{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:20px;box-shadow:0 4px 14px rgba(15,23,42,.10)}.tram-panel h2{margin:0 0 6px;font-size:16px}.tram-panel .desc{color:var(--muted);font-size:12px;line-height:1.5;margin-bottom:16px}.tram-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.secondary{background:#ffffff;color:var(--ink);border:1px solid var(--border);padding:9px 12px;border-radius:6px;font-weight:600;cursor:pointer}.secondary:hover{border-color:var(--accent);color:var(--accent-dark)}.route-result{margin-top:18px}.route-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:12px 0}.route-metric{background:#edf5fe;border:1px solid var(--border);border-radius:6px;padding:10px}.route-metric .k{font-size:10px;text-transform:uppercase;color:var(--muted);letter-spacing:.4px}.route-metric .v{font-size:14px;font-weight:700;margin-top:4px}.flow{display:flex;align-items:stretch;gap:8px;overflow:auto;padding:8px 0 4px}.flow-step{min-width:170px;background:#ffffff;border:1px solid var(--border);border-top:3px solid var(--accent);border-radius:7px;padding:12px;position:relative}.flow-step .num{font-size:10px;color:var(--muted);text-transform:uppercase}.flow-step .org{font-size:13px;font-weight:700;margin:4px 0}.flow-step .why{font-size:11px;line-height:1.4;color:var(--muted)}.flow-arrow{display:flex;align-items:center;color:var(--accent);font-weight:700;font-size:18px}.org-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}.org-item{border:1px solid var(--border);border-radius:6px;padding:10px 12px}.org-item strong{display:block;font-size:13px}.org-item span{display:block;font-size:11px;color:var(--muted);margin-top:2px;line-height:1.4}.badge-demo{display:inline-block;background:#4a3b16;color:#f2c14e;border-radius:10px;padding:3px 8px;font-size:10px;font-weight:700}.future-box{background:#edf5fe;border:1px dashed var(--border);border-radius:7px;padding:12px;margin-top:12px}.future-box strong{font-size:12px}.future-box ul{margin:8px 0 0 18px;padding:0;color:var(--muted);font-size:11px;line-height:1.5}@media(max-width:1000px){.tram-layout{grid-template-columns:1fr}.route-grid{grid-template-columns:1fr}}@media(max-width:600px){.tram-layout{padding:16px}.flow-step{min-width:150px}}
+@media(max-width:1000px){.layout,.layout-rank{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}aside{position:static}.medals{grid-template-columns:1fr}}@media(max-width:600px){header,.layout,.layout-rank{padding:16px}.ingest-bar{flex-wrap:wrap}.ingest-bar input,.ingest-bar select{width:100%;flex:auto}.cards{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.main-head{flex-direction:column;align-items:start}}
+
+.axis-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}.axis-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;box-shadow:0 4px 14px rgba(15,23,42,.08);transition:.15s}.axis-card:hover{border-color:var(--accent);transform:translateY(-1px)}.axis-card.active{background:#dbeafe;border:2px solid #60a5fa;transform:translateY(-1px)}.axis-card .icon{font-size:20px}.axis-card .name{font-weight:700;margin-top:6px;font-size:13px}.axis-card .small{font-size:10px;color:var(--muted);margin-top:3px}.search-panel{background:#fff;border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:18px;box-shadow:0 4px 14px rgba(15,23,42,.08)}.search-grid{display:grid;grid-template-columns:190px 1fr 200px;gap:10px;align-items:end}.mode-toggle{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.mode-btn{border:1px solid var(--border);background:#f8fafc;color:var(--ink);padding:8px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600}.mode-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}.source-pill{display:inline-block;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700}.source-pill.curated{background:#dcfce7;color:#166534}.source-pill.external{background:#e0e7ff;color:#3730a3}.source-pill.pending{background:#fef3c7;color:#92400e}.provenance-box{background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:12px;margin-top:12px}.provenance-box strong{font-size:12px}.provenance-box p{font-size:11px;color:var(--muted);line-height:1.5;margin:5px 0 0}@media(max-width:1100px){.axis-grid{grid-template-columns:repeat(3,1fr)}.search-grid{grid-template-columns:1fr 1fr}}@media(max-width:700px){.axis-grid{grid-template-columns:1fr 1fr}.search-grid{grid-template-columns:1fr}}
+
+.education-tree{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px;margin:18px 0;box-shadow:0 4px 14px rgba(15,23,42,.08)}
+.education-tree h3{margin:0 0 6px;font-size:16px}
+.education-tree .tree-sub{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5}
+.tree-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tree-node{border:1px solid var(--border);border-radius:8px;padding:12px;background:#f8fafc;position:relative}
+.tree-node.active{background:#dbeafe;border:2px solid #60a5fa}
+.tree-node.future{opacity:.78}
+.tree-node .tree-title{font-weight:700;font-size:13px;margin-bottom:6px}
+.tree-node .tree-status{font-size:10px;font-weight:700;border-radius:999px;padding:3px 7px;display:inline-block;margin-bottom:7px}
+.tree-status.mvp{background:#dbeafe;color:#1d4ed8}
+.tree-status.future{background:#e2e8f0;color:#475569}
+.tree-node ul{margin:6px 0 0 16px;padding:0;font-size:11px;color:var(--muted);line-height:1.55}
+.tree-node li.active-problem{color:#0f172a;font-weight:700}
+.hierarchy-box{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:14px}
+.hierarchy-step{background:#fff;border:1px solid var(--border);border-radius:7px;padding:10px;text-align:center}
+.hierarchy-step .k{font-size:10px;text-transform:uppercase;color:var(--muted)}
+.hierarchy-step .v{font-size:12px;font-weight:700;margin-top:3px}
+.hierarchy-arrow{display:none}
+@media(max-width:1000px){.tree-grid{grid-template-columns:repeat(2,1fr)}.hierarchy-box{grid-template-columns:1fr}}
+@media(max-width:650px){.tree-grid{grid-template-columns:1fr}}
+
+
+.source-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.source-card{background:#fff;border:1px solid var(--border);border-radius:9px;padding:14px;cursor:pointer;box-shadow:0 4px 14px rgba(15,23,42,.08);transition:.15s}
+.source-card:hover,.source-card.active{border-color:var(--accent);transform:translateY(-1px)}
+.source-card.active{background:#dbeafe;border:2px solid #60a5fa}
+.source-card .name{font-weight:700;font-size:13px}
+.source-card .desc{font-size:10px;color:var(--muted);margin-top:4px;line-height:1.4}
+.source-card .status{display:inline-block;margin-top:8px;padding:3px 7px;border-radius:999px;font-size:10px;font-weight:700}
+.source-card .status.active{background:#dcfce7;color:#166534}
+.source-card .status.future{background:#e2e8f0;color:#475569}
+@media(max-width:900px){.source-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:550px){.source-grid{grid-template-columns:1fr}}
+
+</style>
+</head>
+<body>
+<header><div><h1>Plataforma de Políticas Públicas Comparadas</h1><div class="sub">Base própria curada + busca externa · <strong>Banco Mundial ativo · OCDE, BID e UNESCO previstos</strong> · MVP demonstrativo</div></div><nav class="tabs" aria-label="Navegação"><button class="active" onclick="showView('base',this)">Base</button><button onclick="showView('ranking',this)">Ranking</button><button onclick="showView('tramitacao',this)">Tramitação</button><button onclick="showView('relatorios',this)">Relatórios</button></nav></header>
+<section id="view-base" class="view active"><div class="layout"><main><div class="stats"><div class="stat"><div class="n" id="count-policies">4</div><div class="l">Casos na base curada</div></div><div class="stat"><div class="n" id="count-countries">4</div><div class="l">Países</div></div><div class="stat"><div class="n">12</div><div class="l">Eixos previstos · Educação ativo</div></div><div class="stat"><div class="n">4</div><div class="l">Fontes externas previstas</div></div></div>
+
+<div class="section-title">0. Escolha a instituição / fonte</div>
+<div class="source-grid" id="source-grid">
+  <div class="source-card active" data-source="Banco Mundial" onclick="selectSource(this)">
+    <div class="name">Banco Mundial</div>
+    <div class="desc">Fonte ativa no MVP. Projetos, avaliações, documentos e indicadores.</div>
+    <span class="status active">MVP ativo</span>
+  </div>
+  <div class="source-card" data-source="OCDE" onclick="selectSource(this)">
+    <div class="name">OCDE</div>
+    <div class="desc">Expansão futura para estudos comparados, indicadores e políticas públicas.</div>
+    <span class="status future">Expansão futura</span>
+  </div>
+  <div class="source-card" data-source="BID" onclick="selectSource(this)">
+    <div class="name">BID</div>
+    <div class="desc">Expansão futura para experiências e avaliações na América Latina e Caribe.</div>
+    <span class="status future">Expansão futura</span>
+  </div>
+  <div class="source-card" data-source="UNESCO" onclick="selectSource(this)">
+    <div class="name">UNESCO</div>
+    <div class="desc">Expansão futura para educação, cultura, ciência e indicadores internacionais.</div>
+    <span class="status future">Expansão futura</span>
+  </div>
+</div>
+<div class="provenance-box">
+  <strong>Escopo atual</strong>
+  <p>O MVP será implementado inicialmente com <strong>Banco Mundial → Educação → Ensino Médio → Evasão Escolar</strong>. As demais instituições já aparecem para preservar a arquitetura de expansão futura.</p>
+</div>
+
+<div class="section-title">1. Escolha o eixo</div>
+
+<div class="axis-grid" id="axis-grid">
+  <div class="axis-card active" data-axis="Educação" onclick="selectAxis(this)">
+    <div class="icon">🎓</div><div class="name">Educação</div>
+    <div class="small">MVP ativo · evasão, aprendizagem, professores</div>
+  </div>
+
+  <div class="axis-card" data-axis="Saúde" onclick="selectAxis(this)">
+    <div class="icon">🏥</div><div class="name">Saúde</div>
+    <div class="small">futuro · atenção básica, filas, vacinação</div>
+  </div>
+
+  <div class="axis-card" data-axis="Transporte e Mobilidade" onclick="selectAxis(this)">
+    <div class="icon">🚌</div><div class="name">Transporte e Mobilidade</div>
+    <div class="small">futuro · mobilidade, segurança viária, logística</div>
+  </div>
+
+  <div class="axis-card" data-axis="Gestão Pública / Governança" onclick="selectAxis(this)">
+    <div class="icon">🏛️</div><div class="name">Gestão Pública / Governança</div>
+    <div class="small">futuro · processos, eficiência, digitalização</div>
+  </div>
+
+  <div class="axis-card" data-axis="Desenvolvimento Urbano / Infraestrutura" onclick="selectAxis(this)">
+    <div class="icon">🏙️</div><div class="name">Desenvolvimento Urbano</div>
+    <div class="small">futuro · habitação, infraestrutura, serviços</div>
+  </div>
+
+  <div class="axis-card" data-axis="Proteção Social" onclick="selectAxis(this)">
+    <div class="icon">🤝</div><div class="name">Proteção Social</div>
+    <div class="small">futuro · renda, vulnerabilidade, inclusão</div>
+  </div>
+
+  <div class="axis-card" data-axis="Energia" onclick="selectAxis(this)">
+    <div class="icon">⚡</div><div class="name">Energia</div>
+    <div class="small">futuro · transição energética, acesso, eficiência</div>
+  </div>
+
+  <div class="axis-card" data-axis="Água e Saneamento" onclick="selectAxis(this)">
+    <div class="icon">💧</div><div class="name">Água e Saneamento</div>
+    <div class="small">futuro · abastecimento, saneamento, gestão hídrica</div>
+  </div>
+
+  <div class="axis-card" data-axis="Transformação Digital" onclick="selectAxis(this)">
+    <div class="icon">💻</div><div class="name">Transformação Digital</div>
+    <div class="small">futuro · governo digital, dados, serviços digitais</div>
+  </div>
+
+  <div class="axis-card" data-axis="Clima e Meio Ambiente" onclick="selectAxis(this)">
+    <div class="icon">🌱</div><div class="name">Clima e Meio Ambiente</div>
+    <div class="small">futuro · adaptação, mitigação, resiliência</div>
+  </div>
+
+  <div class="axis-card" data-axis="Pobreza e Desenvolvimento Econômico" onclick="selectAxis(this)">
+    <div class="icon">📈</div><div class="name">Pobreza e Desenvolvimento</div>
+    <div class="small">futuro · renda, emprego, produtividade</div>
+  </div>
+
+  <div class="axis-card" data-axis="Agricultura e Desenvolvimento Rural" onclick="selectAxis(this)">
+    <div class="icon">🌾</div><div class="name">Agricultura e Rural</div>
+    <div class="small">futuro · produção, segurança alimentar, território</div>
+  </div>
+</div>
+
+<div class="provenance-box">
+  <strong>Escopo do MVP</strong>
+  <p>
+    Nesta primeira versão, apenas <strong>Educação</strong> será tratada como eixo analítico ativo.
+    Os demais eixos aparecem desde já para mostrar a arquitetura futura da plataforma e permitir expansão progressiva sem alterar o desenho principal.
+  </p>
+</div>
+<div class="education-tree">
+  <h3>Estrutura do eixo Educação</h3>
+  <div class="tree-sub">
+    A árvore abaixo organiza Educação em subeixos e problemas. O desenho é inspirado nas áreas temáticas do Banco Mundial, mas adaptado para uso operacional na plataforma da Casa Civil.
+  </div>
+
+  <div class="tree-grid">
+    <div class="tree-node future">
+      <span class="tree-status future">Expansão futura</span>
+      <div class="tree-title">1. Educação Infantil</div>
+      <ul>
+        <li>Acesso</li>
+        <li>Qualidade</li>
+        <li>Desenvolvimento infantil</li>
+      </ul>
+    </div>
+
+    <div class="tree-node future">
+      <span class="tree-status future">Expansão futura</span>
+      <div class="tree-title">2. Ensino Fundamental</div>
+      <ul>
+        <li>Alfabetização</li>
+        <li>Aprendizagem básica</li>
+        <li>Permanência</li>
+        <li>Progressão escolar</li>
+      </ul>
+    </div>
+
+    <div class="tree-node active">
+      <span class="tree-status mvp">MVP ativo</span>
+      <div class="tree-title">3. Ensino Médio</div>
+      <ul>
+        <li class="active-problem">Evasão escolar ← foco inicial</li>
+        <li>Permanência</li>
+        <li>Conclusão</li>
+        <li>Aprendizagem</li>
+        <li>Ensino integral</li>
+        <li>Transição escola-trabalho</li>
+        <li>Educação técnica/profissional</li>
+      </ul>
+    </div>
+
+    <div class="tree-node future">
+      <span class="tree-status future">Expansão futura</span>
+      <div class="tree-title">4. Ensino Superior</div>
+      <ul>
+        <li>Acesso</li>
+        <li>Permanência</li>
+        <li>Conclusão</li>
+        <li>Empregabilidade</li>
+      </ul>
+    </div>
+
+    <div class="tree-node future">
+      <span class="tree-status future">Expansão futura</span>
+      <div class="tree-title">5. Professores</div>
+      <ul>
+        <li>Formação</li>
+        <li>Recrutamento</li>
+        <li>Desempenho</li>
+        <li>Desenvolvimento profissional</li>
+      </ul>
+    </div>
+
+    <div class="tree-node future">
+      <span class="tree-status future">Expansão futura</span>
+      <div class="tree-title">6. Educação Inclusiva</div>
+      <ul>
+        <li>Pessoas com deficiência</li>
+        <li>Grupos vulneráveis</li>
+        <li>Desigualdade de acesso</li>
+      </ul>
+    </div>
+
+    <div class="tree-node future">
+      <span class="tree-status future">Expansão futura</span>
+      <div class="tree-title">7. Educação e Gênero</div>
+      <ul>
+        <li>Acesso de meninas</li>
+        <li>Permanência</li>
+        <li>Desigualdades</li>
+      </ul>
+    </div>
+
+    <div class="tree-node future">
+      <span class="tree-status future">Expansão futura</span>
+      <div class="tree-title">8. Tecnologia na Educação</div>
+      <ul>
+        <li>Educação digital</li>
+        <li>Conectividade</li>
+        <li>Plataformas</li>
+        <li>IA na educação</li>
+      </ul>
+    </div>
+
+    <div class="tree-node future">
+      <span class="tree-status future">Expansão futura</span>
+      <div class="tree-title">9. Financiamento da Educação</div>
+      <ul>
+        <li>Gasto por aluno</li>
+        <li>Eficiência</li>
+        <li>Financiamento escolar</li>
+        <li>Custo-efetividade</li>
+      </ul>
+    </div>
+
+    <div class="tree-node future">
+      <span class="tree-status future">Expansão futura</span>
+      <div class="tree-title">10. Competências e Mercado de Trabalho</div>
+      <ul>
+        <li>Skills</li>
+        <li>Formação profissional</li>
+        <li>Empregabilidade</li>
+        <li>Transição escola-trabalho</li>
+      </ul>
+    </div>
+
+    <div class="tree-node future">
+      <span class="tree-status future">Expansão futura</span>
+      <div class="tree-title">11. Dados e Avaliação</div>
+      <ul>
+        <li>Indicadores</li>
+        <li>Learning outcomes</li>
+        <li>Avaliações</li>
+        <li>Monitoramento</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-title">Hierarquia usada no MVP</div>
+  <div class="hierarchy-box">
+    <div class="hierarchy-step"><div class="k">Eixo</div><div class="v">Educação</div></div>
+    <div class="hierarchy-step"><div class="k">Subeixo</div><div class="v">Ensino Médio</div></div>
+    <div class="hierarchy-step"><div class="k">Problema</div><div class="v">Evasão Escolar</div></div>
+    <div class="hierarchy-step"><div class="k">Intervenções</div><div class="v">Bolsa · Tutoria · Tempo Integral</div></div>
+    <div class="hierarchy-step"><div class="k">Evidências</div><div class="v">Casos · Resultados · Fontes</div></div>
+  </div>
+</div>
+
+<div class="section-title">2. Defina o problema público</div><div class="search-panel"><div class="search-grid"><div><label for="selected-axis">Eixo selecionado</label>
+<select id="selected-axis" onchange="syncAxisCards()">
+  <option>Educação</option>
+  <option>Saúde</option>
+  <option>Transporte e Mobilidade</option>
+  <option>Gestão Pública / Governança</option>
+  <option>Desenvolvimento Urbano / Infraestrutura</option>
+  <option>Proteção Social</option>
+  <option>Energia</option>
+  <option>Água e Saneamento</option>
+  <option>Transformação Digital</option>
+  <option>Clima e Meio Ambiente</option>
+  <option>Pobreza e Desenvolvimento Econômico</option>
+  <option>Agricultura e Desenvolvimento Rural</option>
+  <option>Outro tema</option>
+</select>
+</div><div><label for="policy-search">Problema / pergunta</label><input id="policy-search" type="text" value="Como reduzir a evasão escolar no ensino médio em São Paulo?" placeholder="Descreva o problema público"></div><div><label for="source">Fonte externa preferencial</label><select id="source"><option>Banco Mundial</option><option>OCDE (futuro)</option><option>BID (futuro)</option><option>UNESCO (futuro)</option></select></div></div><div class="mode-toggle"><button class="mode-btn active" id="btn-curated" onclick="setSearchMode('curated')">Buscar primeiro na base própria</button><button class="mode-btn" id="btn-external" onclick="setSearchMode('external')">Pesquisar novas evidências externas</button></div><div class="tram-actions" style="margin-top:12px"><button class="primary" style="width:auto;margin-top:0" onclick="runHybridSearch()">Pesquisar</button><button class="secondary" onclick="showIngestionFlow()">Como um novo caso entra na base?</button></div><div id="ingest-message" class="notice" aria-live="polite"></div></div><div class="section-title">3. Casos disponíveis na base curada</div><div class="cards" id="policy-cards"></div><div id="external-preview" class="search-panel" style="display:none"><div style="display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap"><div><strong>Resultados externos demonstrativos</strong><div class="desc" style="margin:4px 0 0">Na versão conectada, Python/API consultará a fonte, extrairá metadados e criará registros provisórios para revisão.</div></div><span class="source-pill external">busca externa</span></div><div class="cards" id="external-cards" style="margin-top:12px"></div></div><div id="ingestion-flow" class="search-panel" style="display:none"><strong>Fluxo de entrada de um novo caso</strong><div class="flow" style="margin-top:10px"><div class="flow-step"><div class="num">1</div><div class="org">Fonte externa</div><div class="why">Banco Mundial, OCDE, BID, UNESCO...</div></div><div class="flow-arrow">→</div><div class="flow-step"><div class="num">2</div><div class="org">Python / API</div><div class="why">Captura metadados e documentos.</div></div><div class="flow-arrow">→</div><div class="flow-step"><div class="num">3</div><div class="org">Extração estruturada</div><div class="why">Tema, intervenção, público, resultado e método.</div></div><div class="flow-arrow">→</div><div class="flow-step"><div class="num">4</div><div class="org">Revisão</div><div class="why">automatic → reviewed → validated</div></div><div class="flow-arrow">→</div><div class="flow-step"><div class="num">5</div><div class="org">Base curada</div><div class="why">Passa a responder consultas futuras.</div></div></div></div></main><aside><h2>Relatório comparativo</h2><div class="desc">Compare casos selecionados da base curada nas 6 dimensões analíticas.</div><label for="report-focus">Foco do relatório</label><textarea id="report-focus">Como diferentes países abordam a evasão escolar no ensino médio?</textarea><label>Políticas a incluir</label><div class="checks" id="policy-checks"></div><label>Dimensões a comparar</label><div class="checks" id="dimension-checks"></div><label for="report-format">Formato</label><select id="report-format"><option>Markdown</option><option>PDF</option><option>DOCX</option></select><button class="primary" onclick="generateReport()">Gerar relatório</button><div class="footer-note">Registros validados da base própria devem ser priorizados. Resultados externos entram como evidência provisória até revisão.</div></aside></div></section><section id="view-ranking" class="view"><div class="layout-rank"><aside class="controls"><h2>Ponto de referência</h2><div class="desc">Com qual política de SP as outras serão comparadas?</div><div class="ref-card"><div class="title">🇧🇷 NovoTec Expresso SP</div><div class="sub">São Paulo · 2025 (mockup) · ensino médio integral</div><select id="reference" aria-label="Política de referência" style="margin-top:8px"><option>NovoTec Expresso SP (2025)</option><option>Escola de Tempo Integral SP</option><option>Bolsa do Povo Educação</option></select></div><h2>Pesos de similaridade</h2><div class="desc">Ajuste e clique recalcular.</div><label for="weight-context">Contexto geográfico</label><div class="weight-row"><input id="weight-context" type="range" min="0" max="100" value="30" oninput="updateWeightLabels()"><span class="pct" id="weight-context-value">30%</span></div><div class="criteria-desc">PIB/capita, taxa evasão, estrutura escolar</div><label for="weight-diagnosis">Diagnóstico</label><div class="weight-row"><input id="weight-diagnosis" type="range" min="0" max="100" value="45" oninput="updateWeightLabels()"><span class="pct" id="weight-diagnosis-value">45%</span></div><div class="criteria-desc">A política resolve o mesmo problema que SP tem?</div><label for="weight-design">Desenho da política</label><div class="weight-row"><input id="weight-design" type="range" min="0" max="100" value="25" oninput="updateWeightLabels()"><span class="pct" id="weight-design-value">25%</span></div><div class="criteria-desc">Mecanismos implementáveis no contexto SP</div><button class="primary" onclick="calculateRanking()">Recalcular ranking</button></aside><main><div class="main-head"><div><div class="lbl">Comparando contra</div><div class="val" id="rank-ref">🇧🇷 NovoTec Expresso SP</div></div><div><div class="lbl">Base</div><div class="val">10 políticas · 10 países*</div></div><div><div class="lbl">Último cálculo</div><div class="val" id="rank-last">Mockup</div></div></div><div class="section-title">🏆 Top 3 mais similares</div><div class="medals" id="podium-container"></div><div class="section-title">Demais políticas (ordenadas por score)</div><div class="table-wrap"><table><thead><tr><th>País</th><th>Política</th><th>Ano</th><th>Contexto</th><th>Diagnóstico</th><th>Desenho</th><th>Score final</th></tr></thead><tbody id="ranking-rows"></tbody></table></div><div class="warn-note">Ranking ilustrativo: notas atribuídas ao mockup, não provenientes de cálculo científico ou base externa. A ponderação funciona localmente, mas os valores devem ser substituídos por dados validados antes de uso analítico.</div></main></div></section>
+<section id="view-tramitacao" class="view"><div class="tram-layout"><main class="tram-panel"><div style="display:flex;justify-content:space-between;gap:12px;align-items:start;flex-wrap:wrap"><div><h2>Assistente de Tramitação</h2><div class="desc">Descreva uma demanda recebida pela Casa Civil. O MVP identifica o tema e sugere, de forma demonstrativa, quais órgãos podem precisar participar e uma sequência provável de encaminhamento.</div></div><span class="badge-demo">MVP demonstrativo</span></div><label for="process-request">Demanda / pedido</label><textarea id="process-request" style="min-height:110px" placeholder="Ex.: Há um pedido para realização de uma etapa da Copa de Futebol em São Paulo, com grande público e uso de vias públicas."></textarea><div class="tram-actions"><button class="primary" style="width:auto;margin-top:0" onclick="analyzeRouting()">Analisar demanda</button><button class="secondary" onclick="loadRoutingExample('copa')">Exemplo: Copa de Futebol</button><button class="secondary" onclick="loadRoutingExample('educacao')">Exemplo: Educação</button><button class="secondary" onclick="loadRoutingExample('saude')">Exemplo: Saúde</button></div><div id="route-empty" class="warn-note" style="margin-top:18px">A sugestão abaixo será baseada em regras demonstrativas do protótipo. Antes de uso institucional, as competências dos órgãos, normas e históricos do SEI devem ser validados.</div><div id="route-result" class="route-result" hidden><div class="section-title">Leitura da demanda</div><div class="route-grid"><div class="route-metric"><div class="k">Tema identificado</div><div class="v" id="route-theme">—</div></div><div class="route-metric"><div class="k">Órgãos sugeridos</div><div class="v" id="route-count">—</div></div><div class="route-metric"><div class="k">Natureza</div><div class="v" id="route-nature">—</div></div></div><div class="section-title">Fluxo sugerido</div><div class="flow" id="route-flow"></div><div class="section-title">Justificativa dos encaminhamentos</div><div class="org-list" id="route-orgs"></div><div class="warn-note">Este fluxo é ilustrativo. A versão real deverá consultar competências formais, regras administrativas e processos históricos semelhantes antes de sugerir encaminhamento.</div></div></main><aside class="tram-panel"><h2>Evolução prevista</h2><div class="desc">O objetivo é transformar a sugestão de fluxo em uma recomendação baseada em evidências administrativas.</div><div class="future-box"><strong>1. Histórico do SEI</strong><ul><li>Encontrar processos semelhantes.</li><li>Identificar por quais órgãos tramitaram.</li><li>Calcular sequências mais frequentes.</li></ul></div><div class="future-box"><strong>2. Process Mining</strong><ul><li>Tempo médio por etapa.</li><li>Gargalos e retrabalho.</li><li>Desvios do fluxo esperado.</li></ul></div><div class="future-box"><strong>3. Regras institucionais</strong><ul><li>Competência legal de cada secretaria/órgão.</li><li>Etapas obrigatórias.</li><li>Documentos e pareceres necessários.</li></ul></div><div class="future-box"><strong>4. IA para recomendação</strong><ul><li>Classificar a nova demanda.</li><li>Recuperar casos administrativos similares.</li><li>Sugerir fluxo com justificativa e fontes.</li></ul></div></aside></div></section><section id="view-relatorios" class="view"><div class="empty-state"><h2>Relatórios gerados</h2><p>Nenhum relatório gerado ainda. Vá até <strong>Base</strong> e clique em <strong>Gerar relatório</strong> para criar um relatório comparativo demonstrativo.</p><div id="report-container" hidden><h3 id="report-name"></h3><p id="report-info"></p><button class="primary" onclick="downloadReport()" style="width:auto">Baixar relatório</button><div class="report-output" id="report-output"></div></div></div></section>
+<script>
+const dimensions=['Diagnóstico','Premissas','Desenho','Implementação','Acompanhamento','Resultados'];
+const policies=[
+{id:1,axis:'Educação',status:'demo',country:'Chile',flag:'🇨🇱',year:2001,title:'Liceo Para Todos — Projeto de Retenção Escolar',source:'Caso demonstrativo do mockup',tags:['evasão','bolsa condicionada','mentoria'],dims:[1,1,1,1,.5,1],description:'Caso demonstrativo ainda não validado documentalmente neste MVP.'},
+{id:2,axis:'Educação',status:'validated',country:'México',flag:'🇲🇽',year:2019,title:'PODER — Programa de Oportunidades y Desarrollo para Evitar Riesgos',source:'Banco Mundial · Policy Research Working Paper 9085',tags:['evasão escolar','CBT','habilidades socioemocionais','tutoria matemática'],dims:[1,1,1,1,.5,1],description:'CASO REAL 001. Piloto realizado em 20 escolas públicas da Cidade do México com 5.274 estudantes em risco de evasão. A intervenção combinou oficinas de habilidades socioemocionais baseadas em terapia cognitivo-comportamental e tutoria de matemática. A avaliação por experimento randomizado encontrou resultados mistos, com baixa adesão e sem efeito robusto sobre a matrícula no ano seguinte.'},
+{id:3,axis:'Educação',status:'demo',country:'Colômbia',flag:'🇨🇴',year:2012,title:'Jornada Única — Expansão Tempo Integral',source:'Caso demonstrativo do mockup',tags:['evasão','tempo integral','reforma curricular'],dims:[1,.5,1,1,0,.5],description:'Caso demonstrativo ainda não validado documentalmente neste MVP.'},
+{id:4,axis:'Educação',status:'demo',country:'Portugal',flag:'🇵🇹',year:2006,title:'Programa Nacional de Promoção do Sucesso Escolar',source:'Caso demonstrativo do mockup',tags:['evasão','intervenção escolar','dados individuais'],dims:[1,1,1,1,1,1],description:'Caso demonstrativo ainda não validado documentalmente neste MVP.'}
+];
+const candidates=[
+{country:'Chile',flag:'🇨🇱',title:'Liceo Para Todos',year:2001,source:'Avaliação de Impacto',scores:[.82,.94,.78],why:'Diagnóstico semelhante (trabalho precoce e baixa renda), com bolsas e acompanhamento escolar.'},
+{country:'Portugal',flag:'🇵🇹',title:'Sucesso Escolar',year:2006,source:'Relatório',scores:[.55,.88,.76],why:'Intervenções escolares com acompanhamento individualizado e prevenção do abandono.'},
+{country:'México',flag:'🇲🇽',title:'Prepa Sí',year:2008,source:'Working Paper',scores:[.74,.66,.69],why:'Contexto urbano e desigualdade social, com mecanismos de incentivo à permanência escolar.'},
+{country:'Colômbia',flag:'🇨🇴',title:'Jornada Única',year:2012,source:'Policy Brief',scores:[.58,.49,.60]},
+{country:'Peru',flag:'🇵🇪',title:'Beca 18',year:2012,source:'Estudo',scores:[.61,.47,.35]},
+{country:'Argentina',flag:'🇦🇷',title:'Plan Mejoras',year:2010,source:'Relatório',scores:[.54,.42,.45]},
+{country:'Uruguai',flag:'🇺🇾',title:'Acompañamiento de Trayectorias',year:2015,source:'Relatório',scores:[.51,.52,.42]},
+{country:'Equador',flag:'🇪🇨',title:'Programa de Inclusão Escolar',year:2014,source:'Estudo',scores:[.45,.46,.43]},
+{country:'Costa Rica',flag:'🇨🇷',title:'Avancemos',year:2006,source:'Relatório',scores:[.49,.47,.41]},
+{country:'Brasil',flag:'🇧🇷',title:'Apoio à Permanência',year:2019,source:'Estudo',scores:[.42,.38,.46]}
+];
+let reportText='',reportFilename='relatorio.md';
+function showView(name,btn){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById('view-'+name).classList.add('active');document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));(btn||[...document.querySelectorAll('nav.tabs button')].find(b=>b.textContent.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')===name))?.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function safe(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function renderBase(){const activeAxis=document.getElementById('selected-axis')?.value||'Educação';const visible=policies.filter(p=>activeAxis==='Outro tema'||p.axis===activeAxis);
+  const isFutureAxis=activeAxis!=='Educação' && activeAxis!=='Outro tema';document.getElementById('policy-cards').innerHTML=isFutureAxis
+    ? `<div class="warn-note"><strong>${safe(activeAxis)}</strong> está projetado como eixo futuro. O MVP atual será desenvolvido e validado primeiro em Educação. Depois, a mesma arquitetura poderá ser reutilizada para este eixo.</div>`
+    : visible.map(p=>`<article class="card" title="${safe(p.description)}"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><div><span class="flag">${p.flag}</span><span style="font-size:12px;color:var(--muted)">${safe(p.country)} · ${p.year}</span></div><span class="source-pill ${p.status==='validated'?'curated':'pending'}">${p.status==='validated'?'caso real validado':p.status==='demo'?'demonstrativo':'revisado'}</span></div><div class="title">${safe(p.title)}</div><div class="meta">${safe(p.source)}</div><div class="tags">${p.tags.map(t=>`<span class="tag">${safe(t)}</span>`).join('')}</div><div class="dims">${p.dims.map((d,i)=>`<div class="dim ${d===1?'full':d===0?'empty':'partial'}">${dimensions[i].toLowerCase()}</div>`).join('')}</div></article>`).join('')||`<div class="warn-note">Ainda não há casos curados neste eixo no mockup. Use a busca externa para localizar novas evidências.</div>`;document.getElementById('policy-checks').innerHTML=policies.map(p=>`<label><input type="checkbox" value="${p.id}" checked>${safe(p.title.split(' — ')[0])} (${safe(p.country)})</label>`).join('');document.getElementById('dimension-checks').innerHTML=dimensions.map((d,i)=>`<label><input type="checkbox" value="${i}" ${i!==4?'checked':''}>${d}</label>`).join('');document.getElementById('count-policies').textContent=policies.length;document.getElementById('count-countries').textContent=new Set(policies.map(p=>p.country)).size;}
+function simulateIngest(){let q=document.getElementById('policy-search').value.trim(),src=document.getElementById('source').value;document.getElementById('ingest-message').textContent=`Demonstração: busca por “${q||'políticas educacionais'}” em ${src}. A conexão real com a fonte externa ainda não está implementada.`;}
+function updateWeightLabels(){['context','diagnosis','design'].forEach(x=>document.getElementById('weight-'+x+'-value').textContent=document.getElementById('weight-'+x).value+'%');}
+function calculateRanking(){let weights=['context','diagnosis','design'].map(x=>+document.getElementById('weight-'+x).value),total=weights.reduce((a,b)=>a+b,0);if(total===0){alert('Defina pelo menos um peso maior que zero.');return;}const ranked=candidates.map(c=>({...c,score:c.scores.reduce((sum,v,i)=>sum+v*weights[i],0)/total})).sort((a,b)=>b.score-a.score);document.getElementById('rank-ref').textContent='🇧🇷 '+document.getElementById('reference').selectedOptions[0].text;document.getElementById('rank-last').textContent='Calculado agora (demo)';document.getElementById('podium-container').innerHTML=ranked.slice(0,3).map((p,i)=>`<article class="podium ${['gold','silver','bronze'][i]}"><div class="medal">${i+1}</div><div style="font-size:12px;color:var(--muted)">${p.flag} ${safe(p.country)} · ${p.year}</div><div class="title">${safe(p.title)}</div><div class="meta">${safe(p.source)}</div><div class="score-big">${p.score.toFixed(2)} <span class="suf">/ 1.00</span></div><div class="breakdown">${p.scores.map((s,j)=>`<div class="bd-item"><span class="lbl">${['Contx','Diagn','Des'][j]}</span><span class="v">${s.toFixed(2)}</span></div>`).join('')}</div><div class="justif">${safe(p.why||'Compatibilidade estimada com os três critérios do mockup.')}</div></article>`).join('');document.getElementById('ranking-rows').innerHTML=ranked.slice(3).map(p=>`<tr><td>${p.flag} ${safe(p.country)}</td><td>${safe(p.title)}</td><td>${p.year}</td>${p.scores.map(x=>`<td class="score-cell ${x>=.7?'good':x>=.45?'mid':'low'}">${x.toFixed(2)}</td>`).join('')}<td class="score-cell ${p.score>=.7?'good':p.score>=.45?'mid':'low'}">${p.score.toFixed(2)}</td></tr>`).join('');}
+function generateReport(){const ids=[...document.querySelectorAll('#policy-checks input:checked')].map(x=>+x.value),dimids=[...document.querySelectorAll('#dimension-checks input:checked')].map(x=>+x.value);if(!ids.length||!dimids.length){alert('Selecione ao menos uma política e uma dimensão.');return;}const selected=policies.filter(p=>ids.includes(p.id)),focus=document.getElementById('report-focus').value.trim(),format=document.getElementById('report-format').value;reportText=`# Relatório comparativo — Políticas Públicas\n\n**Foco:** ${focus||'Comparação de políticas educacionais'}\n\n**Políticas:** ${selected.length}\n**Dimensões:** ${dimids.map(i=>dimensions[i]).join(', ')}\n\n> MVP demonstrativo: não contém textos extraídos de fontes externas nem interpretação gerada por IA.\n\n`+selected.map(p=>`## ${p.flag} ${p.country} — ${p.title} (${p.year})\n\n**Fonte indicada no mockup:** ${p.source}\n\n${p.description}\n\n`+dimids.map(i=>`- **${dimensions[i]}:** ${p.dims[i]===1?'Preenchida':p.dims[i]===0?'Não preenchida':'Parcialmente preenchida'} no mockup.`).join('\n')).join('\n\n');document.getElementById('report-container').hidden=false;document.getElementById('report-name').textContent='Relatório comparativo — '+selected.length+' políticas';document.getElementById('report-info').textContent=format==='Markdown'?'Pronto para baixar em Markdown.':`Você selecionou ${format}, mas a exportação nativa para ${format} não está implementada neste mockup. É possível baixar o conteúdo em Markdown.`;document.getElementById('report-output').textContent=reportText;reportFilename='relatorio-politicas.md';showView('relatorios');}
+function downloadReport(){if(!reportText)return;const blob=new Blob([reportText],{type:'text/markdown;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=reportFilename;a.click();URL.revokeObjectURL(url);}
+
+const routingExamples={
+  copa:'Há um pedido para realização de uma etapa da Copa de Futebol em São Paulo, com grande público, operação de mobilidade, segurança, atendimento de saúde e promoção turística.',
+  educacao:'Proposta para criar um programa estadual de permanência de estudantes no ensino médio, com bolsas, acompanhamento individual e participação das escolas da rede estadual.',
+  saude:'Solicitação para implantação de uma campanha estadual de vacinação com apoio dos municípios, comunicação pública e planejamento de distribuição dos insumos.'
+};
+const routingRules=[
+  {keys:['copa','futebol','estádio','estadio','evento esportivo','torneio'],theme:'Grande evento esportivo',nature:'Intersetorial',orgs:[
+    ['Secretaria de Esportes','Analisar mérito esportivo, calendário, infraestrutura e relação com organizadores.'],
+    ['Secretaria da Segurança Pública','Planejar segurança, controle de público e operação no entorno do evento.'],
+    ['Secretaria da Saúde','Avaliar estrutura de atendimento, emergência, vigilância e suporte sanitário.'],
+    ['Secretaria de Transportes / Mobilidade','Planejar acesso, transporte coletivo, interdições e circulação de pessoas.'],
+    ['Secretaria de Turismo e Viagens','Avaliar impactos turísticos, recepção de visitantes e promoção do destino.'],
+    ['Casa Civil','Coordenar a articulação entre órgãos e consolidar encaminhamentos para decisão.']
+  ]},
+  {keys:['ensino','educação','educacao','escola','estudante','evasão','evasao'],theme:'Política educacional',nature:'Política pública setorial',orgs:[
+    ['Secretaria da Educação','Órgão central para desenho, público-alvo, rede escolar e execução da política.'],
+    ['Secretaria de Desenvolvimento Social','Avaliar vulnerabilidade e articulação com benefícios sociais, quando aplicável.'],
+    ['Secretaria da Fazenda / Planejamento','Avaliar impacto orçamentário, sustentabilidade e disponibilidade de recursos.'],
+    ['Casa Civil','Articular órgãos envolvidos, compatibilizar a proposta e apoiar decisão governamental.']
+  ]},
+  {keys:['vacina','vacinação','vacinacao','saúde','saude','hospital','epidemia'],theme:'Saúde pública',nature:'Política pública intergovernamental',orgs:[
+    ['Secretaria da Saúde','Definir estratégia sanitária, público-alvo, insumos e execução técnica.'],
+    ['Secretaria de Governo / Relações Institucionais','Articular municípios e demais entes participantes.'],
+    ['Secretaria de Comunicação','Planejar comunicação pública, orientação e combate à desinformação.'],
+    ['Secretaria da Fazenda / Planejamento','Avaliar recursos necessários e impacto orçamentário.'],
+    ['Casa Civil','Coordenar decisões intersetoriais e acompanhar encaminhamentos.']
+  ]}
+];
+function loadRoutingExample(kind){document.getElementById('process-request').value=routingExamples[kind]||'';analyzeRouting();}
+function analyzeRouting(){
+  const text=document.getElementById('process-request').value.trim();
+  if(!text){alert('Descreva a demanda antes de analisar.');return;}
+  const normalized=text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  let rule=routingRules.find(r=>r.keys.some(k=>normalized.includes(k.normalize('NFD').replace(/[\u0300-\u036f]/g,''))));
+  if(!rule){rule={theme:'Demanda administrativa geral',nature:'A classificar',orgs:[['Órgão setorial competente','Identificar o órgão responsável pelo mérito principal da demanda.'],['Assessoria Jurídica / área normativa','Verificar requisitos legais e regulatórios aplicáveis, quando necessário.'],['Secretaria da Fazenda / Planejamento','Avaliar impacto orçamentário caso a demanda envolva recursos públicos.'],['Casa Civil','Coordenar o encaminhamento e a articulação institucional.']]};}
+  document.getElementById('route-theme').textContent=rule.theme;
+  document.getElementById('route-count').textContent=rule.orgs.length;
+  document.getElementById('route-nature').textContent=rule.nature;
+  document.getElementById('route-flow').innerHTML=rule.orgs.map((o,i)=>`${i?'<div class="flow-arrow">→</div>':''}<div class="flow-step"><div class="num">Etapa ${i+1}</div><div class="org">${safe(o[0])}</div><div class="why">${safe(o[1])}</div></div>`).join('');
+  document.getElementById('route-orgs').innerHTML=rule.orgs.map((o,i)=>`<div class="org-item"><strong>${i+1}. ${safe(o[0])}</strong><span>${safe(o[1])}</span></div>`).join('');
+  document.getElementById('route-result').hidden=false;
+  document.getElementById('route-empty').style.display='none';
+}
+
+
+let selectedInstitution='Banco Mundial';
+function selectSource(el){
+  document.querySelectorAll('.source-card').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  selectedInstitution=el.dataset.source;
+  const src=document.getElementById('source');
+  if(src){
+    [...src.options].forEach(o=>{
+      if(o.textContent.startsWith(selectedInstitution)){src.value=o.value;}
+    });
+  }
+  const msg=document.getElementById('ingest-message');
+  if(selectedInstitution==='Banco Mundial'){
+    if(msg) msg.textContent='Banco Mundial selecionado como fonte ativa do MVP.';
+  }else{
+    if(msg) msg.textContent=`${selectedInstitution} está projetada como fonte futura. O MVP será validado primeiro com o Banco Mundial.`;
+  }
+}
+
+let searchMode='curated';const externalDemo=[{country:'Quênia',flag:'🇰🇪',year:2022,title:'Programa de permanência escolar',source:'Banco Mundial · resultado demonstrativo',tags:['evasão','ensino médio'],description:'Resultado externo ilustrativo ainda não incorporado à base curada.'},{country:'Gana',flag:'🇬🇭',year:2021,title:'Apoio à conclusão do ensino secundário',source:'Banco Mundial · resultado demonstrativo',tags:['conclusão','bolsas'],description:'Caso externo ilustrativo para futura extração e validação.'},{country:'Uruguai',flag:'🇺🇾',year:2020,title:'Acompanhamento de trajetórias escolares',source:'BID · resultado demonstrativo',tags:['trajetória','retenção'],description:'Caso externo ilustrativo, sujeito a revisão antes de entrar na base.'}];function selectAxis(el){document.querySelectorAll('.axis-card').forEach(x=>x.classList.remove('active'));el.classList.add('active');document.getElementById('selected-axis').value=el.dataset.axis;renderBase();}function syncAxisCards(){const v=document.getElementById('selected-axis').value;document.querySelectorAll('.axis-card').forEach(x=>x.classList.toggle('active',x.dataset.axis===v));renderBase();}function setSearchMode(mode){searchMode=mode;document.getElementById('btn-curated').classList.toggle('active',mode==='curated');document.getElementById('btn-external').classList.toggle('active',mode==='external');}function runHybridSearch(){const axis=document.getElementById('selected-axis').value,q=document.getElementById('policy-search').value.trim(),src=document.getElementById('source').value;if(searchMode==='curated'){document.getElementById('external-preview').style.display='none';document.getElementById('ingest-message').textContent=`Busca na base própria: eixo “${axis}” · problema “${q||'não informado'}”. O MVP prioriza registros validados já cadastrados.`;renderBase();}else{document.getElementById('ingest-message').textContent=`Busca externa demonstrativa em ${src}: “${q||'problema público'}”. Na versão conectada, Python/API fará esta consulta e retornará registros provisórios.`;document.getElementById('external-preview').style.display='block';document.getElementById('external-cards').innerHTML=externalDemo.map(p=>`<article class="card"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><div><span class="flag">${p.flag}</span><span style="font-size:12px;color:var(--muted)">${safe(p.country)} · ${p.year}</span></div><span class="source-pill external">externo</span></div><div class="title">${safe(p.title)}</div><div class="meta">${safe(p.source)}</div><div class="tags">${p.tags.map(t=>`<span class="tag">${safe(t)}</span>`).join('')}</div><div class="justif">${safe(p.description)}</div><div class="provenance-box"><strong>Status:</strong><p>automatic — precisa revisão antes de ser incorporado à base curada.</p></div></article>`).join('');}}function showIngestionFlow(){const box=document.getElementById('ingestion-flow');box.style.display=box.style.display==='none'||!box.style.display?'block':'none';}
+renderBase();calculateRanking();document.getElementById('rank-last').textContent='Mockup';
+</script>
+</body>
+</html>
